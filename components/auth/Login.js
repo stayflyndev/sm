@@ -1,13 +1,31 @@
 import React, { useState } from 'react'
+import {auth} from '../../firebase/firebase'
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { KeyboardAvoidingView, StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from 'react-native';
 
 export default function Login({ navigation }) {
 
   //setup state 
+  const [userSignedIn, setSignedIn] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  
+  const signInUser = () => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      setSignedIn(true)
+      console.log("User is signed in: "  + userCredential.user.email);
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+    
+  }
 
   return (
     <KeyboardAvoidingView
@@ -36,7 +54,7 @@ export default function Login({ navigation }) {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.button, styles.buttonOutline]}
-          onPress={() => navigation.navigate("Register")}
+          onPress={signInUser}
         >
           <Text style={styles.buttonText}>Login to Account</Text>
         </TouchableOpacity>

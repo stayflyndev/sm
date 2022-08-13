@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Landing from './components/auth/Landing'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
-
+import {auth} from './firebase/firebase'
 import { ScreenStackHeaderLeftView } from 'react-native-screens';
 
 
